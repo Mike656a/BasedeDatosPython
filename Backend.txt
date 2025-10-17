@@ -1,0 +1,53 @@
+// backend.js
+const express = require("express");
+const cors = require("cors");
+const pool = require("./conexion_database");
+
+const app = express();
+app.use(cors());
+app.use(express.json());
+
+// -------------------------
+// RUTAS DE CONSULTA
+// -------------------------
+
+// Obtener todas las obras
+app.get("/obras", async (req, res) => {
+  try {
+    const result = await pool.query("SELECT * FROM OBRAS ORDER BY id_obra");
+    res.json(result.rows);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Error al obtener obras" });
+  }
+});
+
+// Obtener empleados
+app.get("/empleados", async (req, res) => {
+  try {
+    const result = await pool.query("SELECT * FROM EMPLEADOS ORDER BY id_empleado");
+    res.json(result.rows);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Error al obtener empleados" });
+  }
+});
+
+// Obtener materiales
+app.get("/materiales", async (req, res) => {
+  try {
+    const result = await pool.query("SELECT * FROM MATERIALES ORDER BY id_material");
+    res.json(result.rows);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Error al obtener materiales" });
+  }
+});
+
+// -------------------------
+// Servidor escuchando
+// -------------------------
+const PORT = 3000;
+app.listen(PORT, () => {
+  console.log(`🚀 Servidor backend escuchando en http://localhost:${PORT}`);
+});

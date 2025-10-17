@@ -1,0 +1,4 @@
+primero usar python -m venv venv
+despues venv\Scripts\activate
+de ultimo
+pip install -r requirements.txt
